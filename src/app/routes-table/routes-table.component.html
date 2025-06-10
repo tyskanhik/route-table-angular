@@ -1,0 +1,31 @@
+<div class="table-container">
+  @if (isLoading) {
+    <div class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Загрузка маршрутов...</p>
+    </div>
+  } @else {
+    @if (routes$ | async; as routes) {
+      <table>
+        <thead>
+          <tr>
+            <th>Адрес сети</th>
+            <th>Маска</th>
+            <th>Шлюз</th>
+            <th>Интерфейс</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (route of routes; track route.uuid) {
+            <tr>
+              <td>{{ route.address }}</td>
+              <td>{{ route.mask }}</td>
+              <td>{{ route.gateway }}</td>
+              <td>{{ route.interface }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  }
+</div>
