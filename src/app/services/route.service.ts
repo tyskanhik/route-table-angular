@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, delay, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, delay, Observable, of, tap, throwError } from 'rxjs';
 import { Route, RouteSortColumn, SortDirection } from '../models/route.model';
 import { MOCK_ROUTES } from '../mocks/routes.mock';
 
@@ -14,6 +14,8 @@ type CurrensSort = {
 
 export class RouteService {
   private routesSubject = new BehaviorSubject<Route[]>([]);
+  private loadingSubject = new BehaviorSubject<boolean>(true);
+  public isLoading$ = this.loadingSubject.asObservable();
   private currentSort: CurrensSort = { column: '', direction: 'asc' as 'asc' | 'desc' };
 
   constructor() {
@@ -26,7 +28,14 @@ export class RouteService {
   private loadInitialData(): void {
     of(MOCK_ROUTES).pipe(
       delay(1000),
-      tap(route => this.routesSubject.next(route))
+      tap(route => {
+        this.routesSubject.next(route);
+        this.loadingSubject.next(false);
+      }),
+      catchError(err => {
+        this.loadingSubject.next(false);
+        return throwError(() => err);
+      })
     ).subscribe()
   }
 
@@ -86,5 +95,12 @@ export class RouteService {
   private ipToNumber(ip: string): number {
     const [a, b, c, d] = ip.split('.').map(Number);
     return a * 256 ** 3 + b * 256 ** 2 + c * 256 + d;
+  }
+
+  /**
+   * Получаем стейт сортировки 
+   */
+  getCurrentSortState(): CurrensSort {
+    return this.currentSort;
   }
 }
