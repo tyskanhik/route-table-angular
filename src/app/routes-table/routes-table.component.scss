@@ -36,4 +36,12 @@ table {
   tr {
     transition: var(--transition);
   }
+
+  .sort-icon {
+    margin-left: 8px;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+    color: var(--color-info);
+  }
 }
