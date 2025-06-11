@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Route } from '../models/route.model';
 import { RouteService } from '../services/route.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-routes-table',
-  imports: [AsyncPipe],
+  imports: [ CommonModule ,AsyncPipe],
   templateUrl: './routes-table.component.html',
   styleUrl: './routes-table.component.scss'
 })
@@ -14,8 +14,8 @@ export class RoutesTableComponent {
   routes$: Observable<Route[]>
   isLoading = true; // Флаг загрузки
 
-  constructor(private routeServis: RouteService) { 
-    this.routes$ = routeServis.getRoutes();
+  constructor(private routeService: RouteService) { 
+    this.routes$ = routeService.getRoutes();
 
     // Сбрасываем флаг загрузки при получении данных
     this.routes$.subscribe({
