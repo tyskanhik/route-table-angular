@@ -8,15 +8,15 @@ export const MOCK_ROUTES: Route[] = [
   {
     uuid: '6e2bc663-5197-441a-957b-bc75e6a2e8b1',
     address: '192.168.1.0',
-    mask: '255.255.255.0',
-    gateway: '192.168.1.1',
+    mask: '255.255.255.128',
+    gateway: '10.0.0.1',
     interface: 'Домашняя сеть'
   },
   {
     uuid: '3a7d4e5f-8c9d-4b1e-a6f2-7c3d8e9f0a1b',
     address: '10.0.0.0',
-    mask: '255.0.0.0',
-    gateway: '10.0.0.1',
+    mask: '255.255.255.0',
+    gateway: '192.168.1.1',
     interface: 'Подключение Ethernet'
   },
   {
